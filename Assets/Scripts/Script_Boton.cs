@@ -10,10 +10,7 @@ public class Script_Boton : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-    public void Pantallafinal()
-    {
-        SceneManager.LoadScene(1);
-    }
+
     public void PantallaInicial()
     {
         SceneManager.LoadScene(0);

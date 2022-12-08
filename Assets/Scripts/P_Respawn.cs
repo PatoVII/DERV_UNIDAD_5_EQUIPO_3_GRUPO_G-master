@@ -25,18 +25,11 @@ public class P_Respawn : MonoBehaviour
                 RespawnPoint();
             }
         }
-        else
-        {
-            loadscene(scene);
-        }
+        
     }
     void RespawnPoint()
     {
         transform.position = spawnPoint.position;
     }
 
-    private void loadscene(int scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
 }
