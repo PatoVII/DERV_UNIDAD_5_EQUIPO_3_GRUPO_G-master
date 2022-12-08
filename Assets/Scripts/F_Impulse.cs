@@ -32,15 +32,15 @@ public class F_Impulse : MonoBehaviour
         {
 
             rb = GetComponent<Rigidbody>();
-            if (player.transform.position.x < empuje )
+            if (player.transform.position.x < empuje)
             {
 
-                rb.AddForce(transform.right * velocidad, ForceMode.Impulse); //derecha
+                rb.AddForce(Vector3.right * velocidad, ForceMode.Impulse); //derecha
 
             }
             else
             {
-                rb.AddForce(transform.right * -1 * velocidad, ForceMode.Impulse); //Izquierda
+                rb.AddForce(Vector3.left * velocidad, ForceMode.Impulse); //Izquierda
             }
         }
     }

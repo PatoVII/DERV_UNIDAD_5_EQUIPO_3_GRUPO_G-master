@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.PlayerLoop;
 
 public class S_Contador : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI txtTiempo;
-
-    [SerializeField]
-    TextMeshProUGUI txtCaidas;
 
     [SerializeField]
     TextMeshProUGUI txtVida;
@@ -20,21 +19,27 @@ public class S_Contador : MonoBehaviour
     [SerializeField] 
     float spawnValue;
 
-    public int caidas = 0;
     public int vida = 5;
     public static S_Contador contador;
     public float tiempo = 60;
+
+    public GameObject ganaste;
+    public bool fin;
+
+    IEnumerator corrutine;
 
     void Update()
     {
         if (player.transform.position.y < -spawnValue)
         {
-            contador.caidas++;
-            txtCaidas.text = contador.caidas.ToString();
-
             contador.vida--;
-            txtVida.text = contador.vida.ToString();
-     
+            txtVida.text = contador.vida.ToString();     
+        }
+
+        if (ganaste.activeSelf)
+        {
+            fin = true;
+            StopCoroutine(corrutine);
         }
     }
 
@@ -49,35 +54,30 @@ public class S_Contador : MonoBehaviour
             Destroy(this);
         }
 
-        GameObject objCaidas = GameObject.Find("txt_caidas");
-        txtCaidas = objCaidas.GetComponent<TextMeshProUGUI>();
-
         GameObject objVida = GameObject.Find("txt_vidas");
         txtVida = objVida.GetComponent<TextMeshProUGUI>();
         
         GameObject objTiempo = GameObject.Find("txt_tiempo");
         txtTiempo = objTiempo.GetComponent<TextMeshProUGUI>();
 
+        corrutine = Reloj();
+
     }
     private void Start()
     {
         StopAllCoroutines();
-        StartCoroutine("Reloj");
+        StartCoroutine(corrutine);
     }
+
+    
 
     IEnumerator Reloj()
     {
-        while (contador.tiempo >= 0)
+        while (contador.tiempo >= 0 && !contador.fin)
         {
             txtTiempo.text = contador.tiempo.ToString();
             contador.tiempo--;
             
-            if(contador.vida == 0)
-            {
-                contador.tiempo = 60;
-                contador.vida = 5;
-                txtVida.text = contador.vida.ToString();
-            }
             if (contador.tiempo == 0)
             {
                 contador.vida--;
@@ -86,7 +86,11 @@ public class S_Contador : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
         }
+
     }
+
+    
+        
 
 
 }
